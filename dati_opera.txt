@@ -1,0 +1,88 @@
+DROP DATABASE IF EXISTS EsOpereArte;
+CREATE DATABASE EsOpereArte;
+USE EsOpereArte;
+
+CREATE TABLE CITTA (
+    Id INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Provincia VARCHAR(100),
+    Regione VARCHAR(100),
+    Nazione VARCHAR(100)
+);
+
+CREATE TABLE MUSEI (
+    Codice INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Città INT,
+    FOREIGN KEY (Città) REFERENCES CITTA(Id)
+);
+
+CREATE TABLE ARTISTI (
+    id INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Cognome VARCHAR(100),
+    Nome_Darte VARCHAR(100),
+    Nazione VARCHAR(100)
+);
+
+CREATE TABLE OPERE (
+    Codice INT PRIMARY KEY,
+    Titolo VARCHAR(200),
+    Museo INT,
+    Artista INT,
+    FOREIGN KEY (Museo) REFERENCES MUSEI(Codice),
+    FOREIGN KEY (Artista) REFERENCES ARTISTI(id)
+);
+
+CREATE TABLE PERSONAGGI (
+    id INT PRIMARY KEY,
+    Descrizione TEXT,
+    Opera INT,
+    FOREIGN KEY (Opera) REFERENCES OPERE(Codice)
+);
+
+INSERT INTO CITTA (Id, Nome, Provincia, Regione, Nazione) VALUES
+(1, 'Roma', 'Roma', 'Lazio', 'Italia'),
+(2, 'Firenze', 'Firenze', 'Toscana', 'Italia'),
+(3, 'Londra', 'Inghilterra', 'Inghilterra', 'Regno Unito'),
+(4, 'Madrid', 'Madrid', 'Madrid', 'Spagna'),
+(5, 'Parigi', 'Île-de-France', 'Île-de-France', 'Francia');
+
+-- Inserisci dati nella tabella MUSEI
+INSERT INTO MUSEI (Codice, Nome, Città) VALUES
+(1, 'Museo Nazionale Romano', 1),
+(2, 'Galleria degli Uffizi', 2),
+(3, 'National Gallery', 3),
+(4, 'Museo del Prado', 4),
+(5, 'Museo del Louvre', 5);
+
+-- Inserisci dati nella tabella ARTISTI
+INSERT INTO ARTISTI (id, Nome, Cognome, Nome_Darte, Nazione) VALUES
+(1, 'Tiziano', 'Vecellio', 'Tiziano', 'Italia'),
+(2, 'Michelangelo', 'Buonarroti', 'Michelangelo', 'Italia'),
+(3, 'Caravaggio', 'Michelangelo Merisi', 'Caravaggio', 'Italia'),
+(4, 'Francisco', 'Goya', 'Goya', 'Spagna'),
+(5, 'Pablo', 'Picasso', 'Picasso', 'Spagna'),
+(6, 'Claude', 'Monet', 'Monet', 'Francia');
+
+-- Inserisci dati nella tabella OPERE
+INSERT INTO OPERE (Codice, Titolo, Museo, Artista) VALUES
+(1, 'La Gioconda', 1, 1),
+(2, 'Assunzione della Vergine', 2, 1),
+(3, 'Nascita di Venere', 2, 1),
+(4, 'Il Bacco', 1, 3),
+(5, 'Il Giudizio Universale', 1, 2),
+(6, 'La libertà che guida il popolo', 3, 6),
+(7, 'Napoleone al Ponte di Arcole', 3, 4),
+(8, 'Napoleon Bonaparte', 4, 4),
+(9, 'Ritratto di Napoleone', 2, 2),
+(10, 'Madonna col Bambino', 1, 1),
+(11, 'Madonna con la Fmiglia', 3, 1),
+(12, 'Impression, soleil levant', 5, 6);
+
+-- Inserisci dati nella tabella PERSONAGGI
+INSERT INTO PERSONAGGI (id, Descrizione, Opera) VALUES
+(1, 'Ritratto di una donna', 1),
+(2, 'Statua di un giovane', 2),
+(3, 'Caravaggio in un paesaggio', 4),
+(4, 'Ritratto di Napoleone', 9);
